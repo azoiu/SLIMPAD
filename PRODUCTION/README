@@ -114,4 +114,13 @@ Everything you need to build SlimPad from scratch.
 |---------|-----|
 | Key doesn't work | Check diode orientation, reflow solder joints |
 | All keys in a row don't work | Check ROW pin solder on XIAO |
-| All keys in a column don't work | Che
+| All keys in a column don't work | Check COL pin solder on XIAO |
+| OLED blank | Check pin order on J1 header (GND-VCC-SCL-SDA) |
+| Encoder doesn't scroll | Check A and B pin connections |
+| XIAO not detected | Re-flash CircuitPython |
+
+---
+
+## Contact
+
+Questions? Ask in [#hackpad](https://hackclub.slack.com) on Hack Club Slack.
