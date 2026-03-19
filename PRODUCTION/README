@@ -1,0 +1,117 @@
+# Production — SlimPad
+
+Everything you need to build SlimPad from scratch.
+
+---
+
+## What you need to order
+
+### PCB (JLCPCB)
+1. Go to [jlcpcb.com](https://jlcpcb.com)
+2. Click **Order Now** → upload Gerber ZIP from `PCB/` folder
+3. Settings:
+   - Layers: **2**
+   - PCB thickness: **1.6mm**
+   - Material: **FR4**
+   - Surface finish: **HASL**
+   - Color: your choice (green is cheapest)
+   - Qty: **5** (~$5 total)
+4. Checkout and order
+
+### Case (3D print)
+1. Open STL files from `CAD/` folder in your slicer (Bambu, Cura, PrusaSlicer...)
+2. Print settings:
+   - Material: **PLA or PETG**
+   - Layer height: **0.2mm**
+   - Infill: **20%**
+   - Walls: **3**
+   - Supports: **No**
+3. Print both parts: `slimpad_top.stl` and `slimpad_bottom.stl`
+
+---
+
+## What comes in the Blueprint kit
+
+| Item | Qty |
+|------|-----|
+| Seeed XIAO RP2040 | 1 |
+| MX-style switches | 16 (use 12) |
+| 1N4148 diodes | 20 (use 12) |
+| EC11 rotary encoder | 1 |
+| 0.91" OLED display | 1 |
+| DSA keycaps blank white | 16 (use 12) |
+| M3×16mm screws | 4 |
+| M3×5mm×4mm heatset inserts | 4 |
+
+---
+
+## Tools you need
+
+- Soldering iron + solder
+- Flush cutters (for diode legs)
+- M3 hex key / screwdriver
+- Tweezers
+- Multimeter (optional but useful for debugging)
+
+---
+
+## Build order
+
+### Step 1 — Solder diodes
+- Place all 12 diodes on F.Cu side
+- Diode stripe (cathode) must face the **K** marking on PCB
+- Solder, trim legs flush
+
+### Step 2 — Solder XIAO
+- Place XIAO on **B.Cu** (bottom side), USB-C facing the board edge
+- Solder all 14 pins
+
+### Step 3 — Solder OLED header
+- Solder 4-pin header J1 on F.Cu
+- Pin order: **GND → VCC → SCL → SDA** (left to right)
+
+### Step 4 — Solder encoder
+- Place EC11 encoder in SW13 footprint
+- Push down flush, solder all 5 pins + 2 mounting legs
+
+### Step 5 — Solder switches
+- Snap all 12 MX switches into hotswap sockets or solder directly
+- Make sure all pins are straight before soldering
+
+### Step 6 — Install heatset inserts
+- Use soldering iron at ~200°C
+- Press 4× M3 heatset inserts into bottom case corners
+- Push straight down slowly until flush
+
+### Step 7 — Install firmware
+1. Download CircuitPython for XIAO RP2040:
+   [circuitpython.org/board/seeeduino_xiao_rp2040](https://circuitpython.org/board/seeeduino_xiao_rp2040)
+2. Double-press BOOT button on XIAO → BOOT drive appears
+3. Copy `.uf2` file onto BOOT drive → CIRCUITPY drive appears
+4. Download KMK: [github.com/KMKfw/kmk_firmware](https://github.com/KMKfw/kmk_firmware)
+5. Copy `kmk/` folder into `CIRCUITPY/lib/`
+6. Copy `FIRWARE/main.py` to root of `CIRCUITPY/`
+
+### Step 8 — Assemble case
+1. Place PCB into bottom case
+2. Screw in with 4× M3×16mm screws from bottom
+3. Snap top plate over switches
+4. Press keycaps onto switches
+5. Plug in OLED to J1 header
+
+### Step 9 — Test
+- Plug into PC via USB-C
+- Open any text editor
+- Press each key and verify it sends the right shortcut
+- Rotate encoder and verify OLED updates
+- Click encoder and verify it pastes
+
+---
+
+## Troubleshooting
+
+| Problem | Fix |
+|---------|-----|
+| Key doesn't work | Check diode orientation, reflow solder joints |
+| All keys in a row don't work | Check ROW pin solder on XIAO |
+| All keys in a column don't work | Che
